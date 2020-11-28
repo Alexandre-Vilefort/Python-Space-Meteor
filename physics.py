@@ -544,6 +544,15 @@ class MyGame(arcade.View):
 
             if bullet.center_y >= SCREEN_HEIGHT + 60:
                 bullet.remove_from_sprite_lists()
+    
+    def bullet_functions(self, delta_time):
+        """
+        Call Bullets functions
+        """
+        self.bullet_list.on_update(delta_time)
+        self.bullet_fire(delta_time)
+        self.bullet_physics(self.bullet_list)
+    
 
     def on_mouse_press(self, x, y, button, modifiers):
         if arcade.MOUSE_BUTTON_LEFT == button:
@@ -669,12 +678,9 @@ class MyGame(arcade.View):
         #self.enemy_list.update()
         self.objt_list.on_update(delta_time)
 
-        self.bullet_fire(delta_time)
-        self.bullet_physics(self.bullet_list)
-        self.bullet_list.on_update(delta_time)
-
         self.move_player(delta_time)
-       
+
+        self.bullet_functions(delta_time)
         self.call_colisions()
 
         self.physics_objt(self.objt_list, delta_time)
