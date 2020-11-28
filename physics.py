@@ -444,7 +444,23 @@ class MyGame(arcade.View):
                     ball2.remove_from_sprite_lists()
 
                 print("vida", ball1.health, ball2.health)
-               
+    
+    def call_colisions(self):
+        """
+        Call functions for colision calculation
+        """
+        self.colision_wall(self.objt_list)
+        self.colision_list_list(self.objt_list,self.objt_list)
+        self.colision_list_list(self.bullet_list,self.ball_list)
+        ##self.colision_ball_floor(self.ball_list,self.floor)
+        ##self.colision_player_ball(self.player,self.ball_list)
+
+    def funcname(self, parameter_list):
+        """
+        docstring
+        """
+        pass
+
     def bullet_fire(self, delta_time):
         if self.trigger_press and self.fire_time >= GUN_FIRE_RATE : 
             self.pos = arcade.get_viewport()
@@ -650,26 +666,20 @@ class MyGame(arcade.View):
         self.current_time += delta_time
         self.fire_time += delta_time
 
-        self.enemy_list.update()
+        #self.enemy_list.update()
         self.objt_list.on_update(delta_time)
+
         self.bullet_fire(delta_time)
         self.bullet_physics(self.bullet_list)
         self.bullet_list.on_update(delta_time)
 
         self.move_player(delta_time)
-
-        #self.colision_ball_floor(self.ball_list,self.floor)
-        
-        self.colision_wall(self.objt_list)
-        
-        self.colision_list_list(self.objt_list,self.objt_list)
-        self.colision_list_list(self.bullet_list,self.ball_list)
-
-        #self.colision_player_ball(self.player,self.ball_list)
+       
+        self.call_colisions()
 
         self.physics_objt(self.objt_list, delta_time)
 
-        self.enemy_list.update_animation()
+        #self.enemy_list.update_animation()
         
 def main():
     """Create main"""
