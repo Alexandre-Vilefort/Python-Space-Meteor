@@ -461,8 +461,8 @@ class MyGame(arcade.View):
                 
                             smoke = Smoke(_obj.radius*4)
                             smoke.position = _obj.position
-                            smoke.change_x += _obj.change_x/4*self.delta_time
-                            smoke.change_y += _obj.change_y/4*self.delta_time
+                            smoke.change_x += _obj.change_x/8*self.delta_time
+                            smoke.change_y += _obj.change_y/8*self.delta_time
                             self.explosions_list.append(smoke)
 
                             # Hit Sound 
@@ -634,7 +634,7 @@ class MyGame(arcade.View):
             #meteor.change_x = random.randrange(-5,f6)*200
             meteor.mass = density*math.pi*4/3*(meteor.radius/10)**2
             meteor.health = meteor.radius * 12
-            meteor.change_y = 60/meteor.mass
+            meteor.change_y = 160 + 15/meteor.mass + 20*meteor.mass
             meteor.change_x = 0
             meteor.change_angle = 5*rand_angv
             meteor.angle = 10*rand_angv
@@ -716,7 +716,7 @@ class MyGame(arcade.View):
         
 
         for dead in self.dead_list:
-            dead.alpha -= 20
+            dead.alpha -= 15
             if dead.alpha < 30:
                 dead.remove_from_sprite_lists()
         
