@@ -41,7 +41,7 @@ class Ball(arcade.SpriteCircle):
         super().__init__(radius=radius,color=color,soft=soft)
         self.mass = density*math.pi*4/3*(radius/10)**2 #density*math.pi*4/3*(radius/10)**3
         self.radius = radius
-        self.health = self.radius*20
+        self.health = self.radius * 300 * self.scale
         self.hit_damage = 10
 
     def update(self):
@@ -65,7 +65,7 @@ class Rigid(arcade.Sprite):
                          center_x=center_x, center_y=center_y)
         
         self.mass = mass
-        self.radius = radius
+        self.radius = radius * scale
         self.speed_scalar: int = 0
         self.health = 500
         self.hit_damage = 10
@@ -220,6 +220,7 @@ class MyGame(arcade.View):
 
         self.current_time = 0.0
         self.delta_time = 0.0
+        self.hit_count = 0
 
         self.bullet_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
@@ -424,7 +425,7 @@ class MyGame(arcade.View):
 
                 dis_r = obj1.radius*obj1.scale + obj2.radius*obj2.scale - dist
                 if dis_r > 0:
-                    a = 3
+                    a = 10
                     if obj1.mass >= obj2.mass:
                         obj2.center_x += (dis_r + a)*cos
                         obj2.center_y += (dis_r + a)*sin
@@ -445,6 +446,7 @@ class MyGame(arcade.View):
                 """
                 obj1.health -= obj2.hit_damage
                 obj2.health -= obj1.hit_damage
+                
             
                 for _obj in [obj1,obj2]:
                     if _obj.health <= 0:
@@ -453,7 +455,7 @@ class MyGame(arcade.View):
                             self.dead_list.append(_obj)
                             #Generate Explosion
                             for i in range(_obj.radius):
-                                particle = Particle(_obj.radius//4,self.explosions_list)
+                                particle = Particle( _obj.radius//4,self.explosions_list)
                                 particle.position = _obj.position
                                 particle.change_x += _obj.change_x/4*self.delta_time 
                                 particle.change_y += _obj.change_y/4*self.delta_time
@@ -467,8 +469,8 @@ class MyGame(arcade.View):
 
                             # Hit Sound 
                             arcade.sound.play_sound(self.hit_sound,0.1)
-    
-                print("vida", obj1.health, obj2.health)
+                self.hit_count += 1
+                print("vida", obj1.health, obj2.health,"  n_c =", self.hit_count)
     
     def call_colisions(self):
         """
@@ -626,6 +628,8 @@ class MyGame(arcade.View):
             tex : arcade.Texture = arcade.load_texture(PATH / (image_name+image_num), x = 0 , y = 48*rand_color, width = x_m ,height = y_m)
             meteor.texture = tex 
             meteor.radius = x_m//2 if x_m < y_m else y_m//2
+            # Scale pradrão é 1, testar mais no futuro
+            meteor.scale = 1.5
             hitbox: arcade.Texture = arcade.make_circle_texture(meteor.radius * 2, arcade.color.BLACK)
             meteor.hit_box = hitbox.hit_box_points
             meteor.center_x = self.mouse_x
@@ -676,8 +680,8 @@ class MyGame(arcade.View):
         #for bullet in self.bullet_list:
         #    bullet.draw_hit_box(arcade.color.YELLOW)
 
-        #for ball in self.ball_list:
-        #    ball.draw_hit_box(arcade.color.YELLOW)
+        for ball in self.ball_list:
+            ball.draw_hit_box(arcade.color.DARK_YELLOW)
         # Draw Ball list
         self.ball_list.draw()
 
