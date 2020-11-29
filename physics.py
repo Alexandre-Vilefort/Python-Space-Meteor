@@ -121,31 +121,33 @@ class Particle(arcade.SpriteCircle):
         # What list do we add smoke particles to?
         self.my_list = my_list
     def update(self):
+        pass
+       
+    def on_update(self, delta_time: float = 1/60):
         """Update Particles"""
-        if self.my_alpha <= PARTICLE_FADE_RATE: 
+        if self.my_alpha <= PARTICLE_FADE_RATE * delta_time * 60: 
             # Faded out, remove
             self.remove_from_sprite_lists()
         else:
             # Update
-            self.my_alpha -= PARTICLE_FADE_RATE 
+            self.my_alpha -= PARTICLE_FADE_RATE * delta_time * 60 
             self.alpha = self.my_alpha
-            self.center_x += self.change_x 
-            self.center_y += self.change_y 
+            self.center_x += self.change_x * delta_time * 60 
+            self.center_y += self.change_y * delta_time * 60 
             #self.change_y -= PARTICLE_GRAVITY
 
             # Should we sparkle this?
-            if random.random() <= PARTICLE_SPARKLE_CHANCE:
+            if random.random() <= PARTICLE_SPARKLE_CHANCE * delta_time * 60:
                 self.alpha = 255
                 self.texture = arcade.make_circle_texture(self.width, arcade.color.WHITE)
             else:
                 self.texture = self.normal_texture
 
             # Leave a smoke particle?
-            if random.random() <= SMOKE_CHANCE:
-                smoke = Smoke(3)
-                smoke.position = self.position
-                self.my_list.append(smoke)
-       
+            #if random.random() <= SMOKE_CHANCE * delta_time * 60:
+            #    smoke = Smoke(3)
+            #    smoke.position = self.position
+            #    self.my_list.append(smoke)
 
 
 class Smoke(arcade.SpriteCircle):
@@ -704,6 +706,7 @@ class MyGame(arcade.View):
         self.physics_objt(self.obj_list, delta_time)
         self.obj_list.on_update(delta_time)
         self.explosions_list.update()
+        self.explosions_list.on_update(delta_time)
         self.move_player(delta_time)
 
         #self.enemy_list.update()
