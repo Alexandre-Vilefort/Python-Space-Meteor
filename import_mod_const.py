@@ -14,7 +14,7 @@ SCREEN_TITLE = "Shoot Test"
 UPDATE_RATEHz = 1/90.1
 
 # How big the particle
-PARTICLE_RADIUS = 3
+PARTICLE_RADIUS = 1
 
 # How fast the particle moves. Range is from 2.5 <--> 5 with 2.5 and 2.5 set.
 PARTICLE_MIN_SPEED = 2.5
@@ -24,7 +24,7 @@ PARTICLE_SPEED_RANGE = 2.5
 PARTICLE_FADE_RATE = 8
 
 # Chance we'll flip the texture to white and make it 'sparkle'
-PARTICLE_SPARKLE_CHANCE = 0.08
+PARTICLE_SPARKLE_CHANCE = 0.04
 
 # How fast the particle will accelerate down. Make 0 if not desired
 PARTICLE_GRAVITY = 0.05
