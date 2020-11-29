@@ -365,8 +365,8 @@ class MyGame(arcade.View):
             objt.change_y -= GRAVITY*dtime #pensar se colocar int(GRAVITY*dtime)
             #print(ball.change_y)
 
-    def colision_ball_floor(self,ball_list,floor):
-        """Colision with a Floor Sprite"""
+    def collision_ball_floor(self,ball_list,floor):
+        """collision with a Floor Sprite"""
         ball_hit_list = arcade.check_for_collision_with_list(floor, ball_list)
 
         for ball in ball_hit_list:
@@ -376,7 +376,7 @@ class MyGame(arcade.View):
         if len(ball_hit_list) > 0:    
             return True
 
-    def colision_wall(self,obj_list):
+    def collision_wall(self,obj_list):
         for ball in obj_list:
             if ball.center_x <= BALL_RADIOS:
                 ball.center_x = BALL_RADIOS
@@ -394,7 +394,7 @@ class MyGame(arcade.View):
                 ball.center_y = SCREEN_HEIGHT - BALL_RADIOS
                 ball.change_y *= -1
           
-    def colision_list_list(self,obj1_list,obj2_list):
+    def collision_list_list(self,obj1_list,obj2_list):
         for obj1 in obj1_list:
             obj_hit_list = arcade.check_for_collision_with_list(obj1,obj2_list)
             for obj2 in obj_hit_list:
@@ -472,15 +472,15 @@ class MyGame(arcade.View):
                 self.hit_count += 1
                 print("vida", obj1.health, obj2.health,"  n_c =", self.hit_count)
     
-    def call_colisions(self):
+    def call_collisions(self):
         """
-        Call functions for colision calculation
+        Call functions for collision calculation
         """
-        self.colision_wall(self.obj_list)
-        self.colision_list_list(self.obj_list,self.obj_list)
-        self.colision_list_list(self.bullet_list,self.ball_list)
+        self.collision_wall(self.obj_list)
+        self.collision_list_list(self.obj_list,self.obj_list)
+        self.collision_list_list(self.bullet_list,self.ball_list)
         
-        ##self.colision_ball_floor(self.ball_list,self.floor)
+        ##self.collision_ball_floor(self.ball_list,self.floor)
 
     def funcname(self, parameter_list):
         """
@@ -716,7 +716,7 @@ class MyGame(arcade.View):
         #self.enemy_list.update()
 
         self.bullet_functions(delta_time)
-        self.call_colisions()
+        self.call_collisions()
         
 
         for dead in self.dead_list:
