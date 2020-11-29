@@ -468,7 +468,7 @@ class MyGame(arcade.View):
                             self.explosions_list.append(smoke)
 
                             # Hit Sound 
-                            arcade.sound.play_sound(self.hit_sound,0.1)
+                            arcade.sound.play_sound(self.hit_sound,0.05)
                 self.hit_count += 1
                 print("vida", obj1.health, obj2.health,"  n_c =", self.hit_count)
     
@@ -495,7 +495,7 @@ class MyGame(arcade.View):
             bullet = Bullet(PATH /"resources/images/laserBlue01teste.png", 1)
 
             # Bullet Sound
-            arcade.sound.play_sound(self.gun_sound,0.03)
+            arcade.sound.play_sound(self.gun_sound,0.015)
 
             bullet.mass = self.player.mass / 1000
             #bullet.mass = 0.02
