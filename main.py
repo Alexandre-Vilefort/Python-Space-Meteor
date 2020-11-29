@@ -230,8 +230,8 @@ class MyGame(arcade.View):
         self.explosions_list = arcade.SpriteList()
 
         # Sounds
-        self.gun_sound = arcade.sound.load_sound(":resources:sounds/laser2.wav")
-        self.hit_sound = arcade.sound.load_sound(":resources:sounds/explosion2.wav")
+        self.gun_sound = arcade.sound.load_sound(PATH / "resources/sounds/laser2.wav")
+        self.hit_sound = arcade.sound.load_sound(PATH / "resources/sounds/explosion2.wav")
         
 
         self.trigger_press = False
@@ -239,7 +239,7 @@ class MyGame(arcade.View):
         self.fire_time = 0.0
         """Player set up"""
         self.player = Rigid()
-        tex : arcade.Texture = arcade.load_texture(PATH / "images/ikaruga-sprite2.png", x = 0, y = 0, width = 282 ,height = 290)
+        tex : arcade.Texture = arcade.load_texture(PATH / "resources/images/ikaruga-sprite2.png", x = 0, y = 0, width = 282 ,height = 290)
 
         #self.player.alpha = 0
         self.player.center_x = SCREEN_WIDTH/2
@@ -276,7 +276,7 @@ class MyGame(arcade.View):
         
         # Background image
         self.background = arcade.Sprite()
-        self.background.texture = arcade.load_texture(PATH / "images/snes-contra-3-BackGround.png")
+        self.background.texture = arcade.load_texture(PATH / "resources/images/snes-contra-3-BackGround.png")
         self.background.scale = 3
         self.background.center_x = SCREEN_WIDTH//2 +1600 #-self.x_ini
         self.background.center_y = SCREEN_HEIGHT//2
@@ -492,7 +492,7 @@ class MyGame(arcade.View):
         if self.trigger_press and self.fire_time >= GUN_FIRE_RATE : 
             self.pos = arcade.get_viewport()
             # Create a bullet
-            bullet = Bullet(PATH /"images/laserBlue01teste.png", 1)
+            bullet = Bullet(PATH /"resources/images/laserBlue01teste.png", 1)
 
             # Bullet Sound
             arcade.sound.play_sound(self.gun_sound,0.03)
@@ -622,7 +622,7 @@ class MyGame(arcade.View):
             x_m = METEOR_SPRITE_SIZES[rand_size][0]
             y_m = METEOR_SPRITE_SIZES[rand_size][1]
 
-            image_name = "images/meteoros"
+            image_name = "resources/images/meteoros"
             image_num = str(rand_size)+"w"+str(x_m)+"h"+str(y_m) + ".png"
 
             tex : arcade.Texture = arcade.load_texture(PATH / (image_name+image_num), x = 0 , y = 48*rand_color, width = x_m ,height = y_m)

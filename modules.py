@@ -35,7 +35,7 @@ class MenuView(arcade.View):
         self.background.center_x = SCREEN_WIDTH//2
         self.background.center_y = SCREEN_HEIGHT//2
         self.background.scale = 2
-        self.background.texture = arcade.load_texture(PATH / "images/cloudy_sky_aerial_view-1296x728-header.jpg")
+        self.background.texture = arcade.load_texture(PATH / "resources/images/cloudy_sky_aerial_view-1296x728-header.jpg")
 
     def on_draw(self):
         arcade.start_render()
