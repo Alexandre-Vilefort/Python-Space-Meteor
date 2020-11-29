@@ -19,7 +19,7 @@ GRAVITY = 0#700
 
 PARTICLE_COUNT = 20
 
-MOVEMENT_FORCE = 600
+MOVEMENT_FORCE = 800
 
 BALL_COLORS = [arcade.color.RED_BROWN,
                arcade.color.NAVY_BLUE,

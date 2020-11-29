@@ -1,6 +1,6 @@
 
 
-import physics 
+import main 
 from import_mod_const import *
 
 class PauseView(arcade.View):
@@ -24,7 +24,7 @@ class PauseView(arcade.View):
         if key == arcade.key.ESCAPE:   # resume game
             self.window.show_view(self.game_view)
         elif key == arcade.key.ENTER:  # reset game
-            game = physics.MyGame()
+            game = main.MyGame()
             game.setup()
             self.window.show_view(game)
 
@@ -46,7 +46,7 @@ class MenuView(arcade.View):
                          arcade.color.BLUE, font_size=20, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        game = physics.MyGame()
+        game = main.MyGame()
         game.setup()
         self.window.show_view(game)
 
