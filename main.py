@@ -93,18 +93,19 @@ class Bullet(Rigid):
         
         self.health = 10
 
-class Particle(arcade.SpriteCircle):
+class Particle(arcade.SpriteSolidColor): # Old SpriteCircle
 
     """ Explosion particle """
     def __init__(self,size, my_list):
 
-        color = random.choice(PARTICLE_COLORS)
+        #color = random.choice(PARTICLE_COLORS)
+        color = (255, 255, 0)
         # Make the particle
-        super().__init__(size, color)
+        super().__init__(width = size*2, height = size*2, color = color)
 
         # Track normal particle texture, so we can 'flip' when we sparkle.
         self.normal_texture = self.texture
-
+        self.size = size
         # Keep track of the list we are in, so we can add a smoke trail
         self.my_list = my_list
 
@@ -113,7 +114,7 @@ class Particle(arcade.SpriteCircle):
         direction = random.randrange(360)
         self.change_x = math.sin(math.radians(direction)) * speed 
         self.change_y = math.cos(math.radians(direction)) * speed 
-
+        self.angle = random.randrange(2)*45
         # Track original alpha. Used as part of 'sparkle' where we temp set the
         # alpha back to 255
         self.my_alpha = 255
@@ -133,21 +134,24 @@ class Particle(arcade.SpriteCircle):
             self.my_alpha -= PARTICLE_FADE_RATE * delta_time * 60 
             self.alpha = self.my_alpha
             self.center_x += self.change_x * delta_time * 60 
-            self.center_y += self.change_y * delta_time * 60 
+            self.center_y += self.change_y * delta_time * 60
+            
+            if self.color[1] > 6: 
+                self.color = (self.color[0],self.color[1] - 6,self.color[2] )
             #self.change_y -= PARTICLE_GRAVITY
 
             # Should we sparkle this?
             if random.random() <= PARTICLE_SPARKLE_CHANCE * delta_time * 60:
                 self.alpha = 255
-                self.texture = arcade.make_circle_texture(self.width, arcade.color.WHITE)
+                self.texture = arcade.make_circle_texture(self.width*2, (255,255,25))
             else:
                 self.texture = self.normal_texture
 
-            # Leave a smoke particle?
-            #if random.random() <= SMOKE_CHANCE * delta_time * 60:
-            #    smoke = Smoke(3)
-            #    smoke.position = self.position
-            #    self.my_list.append(smoke)
+             # Leave a smoke particle?
+            if random.random() <= SMOKE_CHANCE :#* delta_time * 60:
+                smoke = Smoke(self.size)
+                smoke.position = self.position
+                self.my_list.append(smoke)
 
 
 class Smoke(arcade.SpriteCircle):
@@ -280,7 +284,7 @@ class MyGame(arcade.View):
         self.background.scale = 3
         self.background.center_x = SCREEN_WIDTH//2 +1600 #-self.x_ini
         self.background.center_y = SCREEN_HEIGHT//2
-        arcade.set_background_color(arcade.color.WHITE_SMOKE)
+        arcade.set_background_color(arcade.color.BLACK)
 
     def get_enemy_sprites(self):
 
@@ -454,7 +458,7 @@ class MyGame(arcade.View):
                         if not _obj.__class__.__name__ == "Bullet":
                             self.dead_list.append(_obj)
                             #Generate Explosion
-                            for i in range(_obj.radius):
+                            for i in range(_obj.radius*2):
                                 particle = Particle( _obj.radius//4,self.explosions_list)
                                 particle.position = _obj.position
                                 particle.change_x += _obj.change_x/4*self.delta_time 
@@ -637,7 +641,7 @@ class MyGame(arcade.View):
             #meteor.change_y = random.randrange(-5,6)*200#-BALL_MOV*UPDATE_RATEHz
             #meteor.change_x = random.randrange(-5,f6)*200
             meteor.mass = density*math.pi*4/3*(meteor.radius/10)**2
-            meteor.health = meteor.radius * 12
+            meteor.health = meteor.radius * 12 
             meteor.change_y = 160 + 15/meteor.mass + 20*meteor.mass
             meteor.change_x = 0
             meteor.change_angle = 5*rand_angv
@@ -700,7 +704,7 @@ class MyGame(arcade.View):
         # Draw Frames per second
         if not self.delta_time == 0.0 :
             arcade.draw_text(f"Frames per second: {1.0/self.delta_time:7.2f}",
-                             start_x, start_y+50, arcade.color.BLACK, 20)
+                             start_x, start_y+50, arcade.color.WHITE, 20)
 
     def on_update(self, delta_time):
         """Update Everything that need to be updated."""
@@ -720,7 +724,7 @@ class MyGame(arcade.View):
         
 
         for dead in self.dead_list:
-            dead.alpha -= 15
+            dead.alpha -= 10
             if dead.alpha < 30:
                 dead.remove_from_sprite_lists()
         
