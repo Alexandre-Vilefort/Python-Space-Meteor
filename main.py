@@ -117,6 +117,7 @@ class Particle(arcade.SpriteSolidColor): # Old SpriteCircle
         self.angle = random.randrange(2)*45
         # Track original alpha. Used as part of 'sparkle' where we temp set the
         # alpha back to 255
+        self.health = 255
         self.my_alpha = 255
 
         # What list do we add smoke particles to?
@@ -132,18 +133,18 @@ class Particle(arcade.SpriteSolidColor): # Old SpriteCircle
         else:
             # Update
             self.my_alpha -= PARTICLE_FADE_RATE * delta_time * 60 
-            self.alpha = self.my_alpha
+            self.health = self.my_alpha
             self.center_x += self.change_x * delta_time * 60 
             self.center_y += self.change_y * delta_time * 60
             
             if self.color[1] > 6: 
-                self.color = (self.color[0],self.color[1] - 6,self.color[2] )
+                self.color = (self.color[0],self.color[1] - 4,self.color[2] )
             #self.change_y -= PARTICLE_GRAVITY
 
             # Should we sparkle this?
             if random.random() <= PARTICLE_SPARKLE_CHANCE * delta_time * 60:
-                self.alpha = 255
-                self.texture = arcade.make_circle_texture(self.width*2, (255,255,25))
+                self.health = 255
+                self.texture = arcade.make_circle_texture(int(self.width*2+1), (255,255,25))
             else:
                 self.texture = self.normal_texture
 
@@ -684,8 +685,8 @@ class MyGame(arcade.View):
         #for bullet in self.bullet_list:
         #    bullet.draw_hit_box(arcade.color.YELLOW)
 
-        for ball in self.ball_list:
-            ball.draw_hit_box(arcade.color.DARK_YELLOW)
+        #for ball in self.ball_list:
+        #    ball.draw_hit_box(arcade.color.DARK_YELLOW)
         # Draw Ball list
         self.ball_list.draw()
 
