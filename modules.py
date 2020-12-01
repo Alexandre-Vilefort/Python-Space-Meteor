@@ -14,7 +14,7 @@ class PauseView(arcade.View):
         arcade.start_render()
         pos = arcade.get_viewport()
         self.background = arcade.Sprite()
-        self.background.texture = arcade.load_texture(PATH / "images/pause-game.jpg")
+        self.background.texture = arcade.load_texture(PATH / "resources/images/pause-game.jpg")
         self.background.scale = 2
         self.background.center_x = SCREEN_WIDTH//2 + pos[0]
         self.background.center_y = SCREEN_HEIGHT//2 +pos[2]
