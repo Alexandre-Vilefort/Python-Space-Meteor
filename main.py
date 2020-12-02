@@ -3,7 +3,6 @@ from import_mod_const import *
 import modules
 import copy
 
-#teste
 SCREEN_TITLE = "SpaceShip1"
 SPRITE_SCALING = 3
 UPDATE_RATEHz = 1/90.1
@@ -92,7 +91,7 @@ class Bullet(Rigid):
                          center_x=center_x, center_y=center_y)
         
         self.health = 10
-
+        
 class Particle(arcade.SpriteSolidColor): # Old SpriteCircle
 
     """ Explosion particle """
@@ -300,9 +299,9 @@ class MyGame(arcade.View):
                                                          x=i*64,y=0,width=64,height=64)
             texE1 : arcade.Texture = arcade.load_texture(PATH / "Mecha-RunC.png", 
                                                          x=i*64,y=0,width=64,height=64,flipped_horizontally=True)                                                                                                
-            enemy_walking_textures[1].frames.append(arcade.AnimationKeyframe(i, f*d*1000, texE1))
-            enemy_walking_textures[0].frames.append(arcade.AnimationKeyframe(i, f*d*1000, texE0))
-
+            enemy_walking_textures[1].frames.append(arcade.AnimationKeyframe(i, f*d*1000, texE1))# pylint: disable=E1101
+            enemy_walking_textures[0].frames.append(arcade.AnimationKeyframe(i, f*d*1000, texE0))# pylint: disable=E1101
+            #disable false-postive error mensage
         self.enemy_walking_tex_list = enemy_walking_textures
 
         return enemy_walking_textures
