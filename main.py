@@ -3,6 +3,7 @@ from import_mod_const import *
 import modules
 import copy
 
+#teste
 SCREEN_TITLE = "SpaceShip1"
 SPRITE_SCALING = 3
 UPDATE_RATEHz = 1/90.1
