@@ -1,4 +1,4 @@
-# Game-Project
+#Python-Space-Meteor
 
 Project of a SpaceShip 2D Game
 
